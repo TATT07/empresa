@@ -1,39 +1,44 @@
-package com.empresa.entity;
+package com.consultaria;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
-@Table(name = "funcionario")
+@Table(name = "paciente")
 @Data
-public class funcionario {
-    
+public class Paciente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @NotBlank(message = "La cédula es obligatoria")
-    @Column(nullable = false, unique = true)
-    private String cedula;
-    
+
     @NotBlank(message = "El nombre es obligatorio")
-    @Size(max = 10, min = 2, message = "El nombre debe tener entre 2 y 10 caracteres")
     @Column(nullable = false)
     private String nombre;
-    
+
     @Email(message = "Debe ingresar un correo válido")
     @NotBlank(message = "El correo es obligatorio")
     @Column(nullable = false, unique = true)
-    private String email;
-    
-    private String telefono;
+    private String correo;
+
+    @NotBlank(message = "La dirección es obligatoria")
+    @Column(nullable = false)
     private String direccion;
+
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Column(nullable = false, length = 15)
+    private String telefono;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Citas> citas;
 }

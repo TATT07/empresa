@@ -14,8 +14,12 @@ public class FuncionarioService {
 	
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
-	
+
 	public funcionario guardar(funcionario request) {
+		funcionario nuevo = new funcionario();
+		nuevo.setCedula(request.getCedula());
+		nuevo.setNombre(request.getNombre());
+		nuevo.setEmail(request.getEmail());
 		return funcionarioRepository.save(request);
 	}
 	
@@ -29,7 +33,6 @@ public class FuncionarioService {
 	
 	public funcionario actualizar(Integer id,funcionario request) {
 		Optional<funcionario> f = funcionarioRepository.findById(id);
-		
 		if (f.isPresent() ) {
 			funcionario nuevo=f.get();
 			nuevo.setCedula(request.getCedula());
@@ -46,10 +49,5 @@ public class FuncionarioService {
 	
 	public void eliminar(Integer id) {
 		funcionarioRepository.deleteById(id);
-	}
-
-	public funcionario update(Integer id, funcionario paciente) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
